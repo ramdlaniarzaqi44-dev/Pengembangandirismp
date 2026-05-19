@@ -24,7 +24,7 @@
         /* Custom Styles for Print */
         @media print {
             @page { 
-                margin: 10mm; /* Margin Narrow (1cm) */
+                margin: 7mm; /* Margin dipepetkan agar muat 1 lembar */
                 size: A4 portrait; 
             }
             body { 
@@ -42,49 +42,54 @@
                 margin: 0 !important; 
                 font-family: 'Noto Serif', serif; 
                 color: #1e293b; 
-                font-size: 10pt; 
-                line-height: 1.3;
+                font-size: 8.5pt; /* Ukuran huruf dikecilkan */
+                line-height: 1.2; /* Spasi antar baris dirapatkan */
+                height: 283mm; /* Batas tinggi A4 dikurangi margin */
+                overflow: hidden; /* Paksa potong jika berlebih (anti 2 lembar) */
+                display: flex;
+                flex-direction: column;
             }
             
             /* KOP Style Modern Minimalis */
             .header-kop { 
                 border-bottom: 2px solid #15803d !important; 
-                padding-bottom: 0.5rem; 
-                margin-bottom: 0.75rem; 
+                padding-bottom: 0.25rem; 
+                margin-bottom: 0.4rem; 
                 display: flex;
                 align-items: center;
-                gap: 1rem;
+                gap: 0.75rem;
             }
-            .header-yayasan { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 2px; text-transform: uppercase; color: #166534; }
-            .sekolah-nama { color: #15803d !important; font-size: 15pt !important; font-weight: 800 !important; line-height: 1.1; margin-bottom: 2px; text-transform: uppercase; }
-            .header-info { font-size: 7.5pt !important; color: #475569 !important; }
+            .header-kop img { height: 3.5rem !important; width: auto !important; }
+            .header-yayasan { font-size: 7pt; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 1px; text-transform: uppercase; color: #166534; }
+            .sekolah-nama { color: #15803d !important; font-size: 12pt !important; font-weight: 800 !important; line-height: 1; margin-bottom: 1px; text-transform: uppercase; }
+            .header-info { font-size: 6.5pt !important; color: #475569 !important; }
 
             /* JUDUL & DATA */
             .doc-title-box {
                 background-color: #f0fdf4;
                 border-left: 4px solid #15803d;
-                padding: 0.5rem;
-                margin-bottom: 0.75rem;
+                padding: 0.25rem 0.5rem;
+                margin-bottom: 0.4rem;
             }
-            .doc-title { font-size: 11pt !important; margin: 0; font-weight: 700; color: #14532d; text-transform: uppercase; }
-            .doc-subtitle { font-size: 9pt !important; margin: 0; color: #166534; }
+            .doc-title { font-size: 9.5pt !important; margin: 0; font-weight: 700; color: #14532d; text-transform: uppercase; }
+            .doc-subtitle { font-size: 7.5pt !important; margin: 0; color: #166534; }
             
             .student-data { 
-                font-size: 9pt !important; 
-                margin-bottom: 0.75rem !important; 
-                padding: 0.5rem;
+                font-size: 8pt !important; 
+                margin-bottom: 0.4rem !important; 
+                padding: 0.25rem 0.5rem;
                 background: #f8fafc;
                 border-radius: 4px;
                 border: 1px solid #e2e8f0;
             }
 
             /* CHART STYLES (UNSUR GAMBAR AVG) */
-            .chart-row { display: flex; align-items: center; margin-bottom: 4px; }
-            .chart-icon { width: 16px; text-align: center; font-size: 9pt; margin-right: 4px; }
-            .chart-label { width: 85px; font-size: 8pt; font-weight: 600; color: #334155; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-            .chart-track { flex: 1; height: 10px; background-color: #e2e8f0; border-radius: 6px; overflow: hidden; margin: 0 6px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
-            .chart-fill { height: 100%; border-radius: 6px; }
-            .chart-value { width: 24px; text-align: right; font-size: 7.5pt; font-weight: 700; color: #64748b; font-family: monospace; }
+            .chart-row { display: flex; align-items: center; margin-bottom: 2px; }
+            .chart-icon { width: 14px; text-align: center; font-size: 8pt; margin-right: 2px; }
+            .chart-label { width: 75px; font-size: 7.5pt; font-weight: 600; color: #334155; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .chart-track { flex: 1; height: 8px; background-color: #e2e8f0; border-radius: 4px; overflow: hidden; margin: 0 4px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
+            .chart-fill { height: 100%; border-radius: 4px; }
+            .chart-value { width: 22px; text-align: right; font-size: 7pt; font-weight: 700; color: #64748b; font-family: monospace; }
 
             /* Color Classes for Charts */
             .fill-blue { background: linear-gradient(90deg, #3b82f6, #2563eb) !important; }
@@ -93,25 +98,25 @@
 
             /* CONTENT BOXES */
             .section-title { 
-                font-size: 9.5pt !important; 
-                margin-bottom: 0.4rem !important; 
+                font-size: 8.5pt !important; 
+                margin-bottom: 0.2rem !important; 
                 color: #0f172a !important; 
                 font-weight: 700; 
                 text-transform: uppercase; 
                 display: flex;
                 align-items: center;
                 background: #f1f5f9;
-                padding: 4px 8px;
-                border-radius: 4px;
+                padding: 2px 6px;
+                border-radius: 3px;
             }
             
             .print-box { 
                 border: 1px solid #e2e8f0 !important; 
                 background-color: white !important; 
-                padding: 0.6rem !important; 
-                border-radius: 0.5rem !important; 
-                font-size: 9pt !important;
-                margin-bottom: 0.6rem !important;
+                padding: 0.4rem !important; 
+                border-radius: 0.4rem !important; 
+                font-size: 8pt !important;
+                margin-bottom: 0 !important;
                 box-shadow: 0 1px 2px rgba(0,0,0,0.02);
             }
             
@@ -119,29 +124,31 @@
                 background-color: #ecfdf5 !important; 
                 border: 1px solid #6ee7b7 !important; 
                 color: #064e3b !important; 
-                padding: 0.75rem !important;
-                font-size: 9pt !important;
-                border-radius: 0.5rem;
+                padding: 0.5rem !important;
+                font-size: 8pt !important;
+                border-radius: 0.4rem;
                 position: relative;
-                margin-bottom: 0.6rem !important;
+                margin-bottom: 0 !important;
             }
             .strategy-box {
                 background-color: #eff6ff !important;
                 border: 1px solid #bfdbfe !important;
                 color: #1e3a8a !important;
-                padding: 0.75rem !important;
-                font-size: 9pt !important;
-                border-radius: 0.5rem;
-                margin-bottom: 0.6rem !important;
+                padding: 0.5rem !important;
+                font-size: 8pt !important;
+                border-radius: 0.4rem;
+                margin-bottom: 0.4rem !important;
             }
 
-            .print-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.5rem; }
+            .print-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.4rem; }
             .print-full { grid-column: span 2; }
             
             .text-justify { text-align: justify; }
             
-            /* Footer Adjustment */
-            .footer-sig { margin-top: 0.5rem; }
+            /* Footer Adjustment - Dorong ttd ke paling bawah */
+            .footer-sig { margin-top: auto; padding-top: 0.25rem; }
+            .footer-sig p { margin-bottom: 2px !important; }
+            .footer-sig p:nth-child(2) { margin-bottom: 2rem !important; } /* Ruang kosong untuk tanda tangan */
         }
     </style>
 </head>
@@ -341,8 +348,8 @@
         <!-- FOOTER -->
         <div class="flex justify-end footer-sig break-inside-avoid">
             <div class="text-center min-w-[200px]">
-                <p style="margin-bottom: 2px;">Mojokerto, <span id="print-date"></span></p>
-                <p style="margin-bottom: 3.5rem;">Guru Bimbingan Konseling,</p>
+                <p>Mojokerto, <span id="print-date"></span></p>
+                <p>Guru Bimbingan Konseling,</p>
                 <p id="print-guru-nama" class="font-bold underline underline-offset-2 text-[10pt]"></p>
                 <p class="text-[9pt]">NIP. -</p>
             </div>
