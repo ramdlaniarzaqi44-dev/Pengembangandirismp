@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asesmen Psikologi - SMP AL-MULTAZAM</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        .hidden-view { display: none !important; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Custom Styles for Print */
+        @media print {
+            @page { 
+                margin: 10mm; /* Margin Narrow (1cm) */
+                size: A4 portrait; 
+            }
+            body { 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact; 
+                background-color: white; 
+            }
+            .no-print, #view-welcome, #view-test, #view-dashboard { display: none !important; }
+            .print-block { display: block !important; }
+            
+            .print-container { 
+                width: 100% !important; 
+                max-width: 100% !important;
+                padding: 0 !important; 
+                margin: 0 !important; 
+                font-family: 'Noto Serif', serif; 
+                color: #1e293b; 
+                font-size: 10pt; 
+                line-height: 1.3;
+            }
+            
+            /* KOP Style Modern Minimalis */
+            .header-kop { 
+                border-bottom: 2px solid #15803d !important; 
+                padding-bottom: 0.5rem; 
+                margin-bottom: 0.75rem; 
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+            .header-yayasan { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 2px; text-transform: uppercase; color: #166534; }
+            .sekolah-nama { color: #15803d !important; font-size: 15pt !important; font-weight: 800 !important; line-height: 1.1; margin-bottom: 2px; text-transform: uppercase; }
+            .header-info { font-size: 7.5pt !important; color: #475569 !important; }
+
+            /* JUDUL & DATA */
+            .doc-title-box {
+                background-color: #f0fdf4;
+                border-left: 4px solid #15803d;
+                padding: 0.5rem;
+                margin-bottom: 0.75rem;
+            }
+            .doc-title { font-size: 11pt !important; margin: 0; font-weight: 700; color: #14532d; text-transform: uppercase; }
+            .doc-subtitle { font-size: 9pt !important; margin: 0; color: #166534; }
+            
+            .student-data { 
+                font-size: 9pt !important; 
+                margin-bottom: 0.75rem !important; 
+                padding: 0.5rem;
+                background: #f8fafc;
+                border-radius: 4px;
+                border: 1px solid #e2e8f0;
+            }
+
+            /* CHART STYLES (UNSUR GAMBAR AVG) */
+            .chart-row { display: flex; align-items: center; margin-bottom: 4px; }
+            .chart-icon { width: 16px; text-align: center; font-size: 9pt; margin-right: 4px; }
+            .chart-label { width: 85px; font-size: 8pt; font-weight: 600; color: #334155; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .chart-track { flex: 1; height: 10px; background-color: #e2e8f0; border-radius: 6px; overflow: hidden; margin: 0 6px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
+            .chart-fill { height: 100%; border-radius: 6px; }
+            .chart-value { width: 24px; text-align: right; font-size: 7.5pt; font-weight: 700; color: #64748b; font-family: monospace; }
+
+            /* Color Classes for Charts */
+            .fill-blue { background: linear-gradient(90deg, #3b82f6, #2563eb) !important; }
+            .fill-teal { background: linear-gradient(90deg, #14b8a6, #0d9488) !important; }
+            .fill-indigo { background: linear-gradient(90deg, #6366f1, #4f46e5) !important; }
+
+            /* CONTENT BOXES */
+            .section-title { 
+                font-size: 9.5pt !important; 
+                margin-bottom: 0.4rem !important; 
+                color: #0f172a !important; 
+                font-weight: 700; 
+                text-transform: uppercase; 
+                display: flex;
+                align-items: center;
+                background: #f1f5f9;
+                padding: 4px 8px;
+                border-radius: 4px;
+            }
+            
+            .print-box { 
+                border: 1px solid #e2e8f0 !important; 
+                background-color: white !important; 
+                padding: 0.6rem !important; 
+                border-radius: 0.5rem !important; 
+                font-size: 9pt !important;
+                margin-bottom: 0.6rem !important;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            }
+            
+            .suggestion-box { 
+                background-color: #ecfdf5 !important; 
+                border: 1px solid #6ee7b7 !important; 
+                color: #064e3b !important; 
+                padding: 0.75rem !important;
+                font-size: 9pt !important;
+                border-radius: 0.5rem;
+                position: relative;
+                margin-bottom: 0.6rem !important;
+            }
+            .strategy-box {
+                background-color: #eff6ff !important;
+                border: 1px solid #bfdbfe !important;
+                color: #1e3a8a !important;
+                padding: 0.75rem !important;
+                font-size: 9pt !important;
+                border-radius: 0.5rem;
+                margin-bottom: 0.6rem !important;
+            }
+
+            .print-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.5rem; }
+            .print-full { grid-column: span 2; }
+            
+            .text-justify { text-align: justify; }
+            
+            /* Footer Adjustment */
+            .footer-sig { margin-top: 0.5rem; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen overflow-x-hidden">
+
+    <!-- ================= VIEW 1: LOGIN ================= -->
+    <div id="view-welcome" class="min-h-screen flex items-center justify-center p-4 fade-in bg-slate-100 app-view">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl overflow-hidden flex flex-col md:flex-row min-h-[550px]">
+            <!-- Branding -->
+            <div class="w-full md:w-1/2 bg-teal-600 p-8 md:p-12 flex flex-col items-center justify-center text-white relative">
+                <div class="absolute top-0 left-0 w-40 h-40 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+                <div class="relative z-10 text-center">
+                    <div class="bg-white p-4 rounded-full inline-block mb-6 shadow-xl">
+                        <img src="https://i.ibb.co.com/zTGpbttr/LOGO-SMP-ALTAZ-removebg-preview.png" alt="Logo SMP Al-Multazam" class="h-28 w-auto">
+                    </div>
+                    <h1 class="text-3xl font-extrabold mb-3 tracking-wide">SMP AL-MULTAZAM</h1>
+                    <p class="text-teal-50 font-medium text-lg">Asesmen Psikologi & Potensi Siswa</p>
+                </div>
+            </div>
+            <!-- Form -->
+            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white">
+                <div class="max-w-md mx-auto w-full">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center"><i data-lucide="log-in" class="mr-2 text-teal-600"></i> Identitas Siswa</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Nama Lengkap</label>
+                            <input type="text" id="input-nama" class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-teal-500" placeholder="Nama Lengkap">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Jenis Kelamin</label>
+                            <select id="input-gender" class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-teal-500">
+                                <option value="" disabled selected>Pilih Putra / Putri</option>
+                                <option value="Putra">Putra</option>
+                                <option value="Putri">Putri</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Kelas</label>
+                                <input type="text" id="input-kelas" class="w-full px-4 py-3 border border-slate-300 rounded-xl text-center" placeholder="VII-A">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">NIS</label>
+                                <input type="text" id="input-nis" class="w-full px-4 py-3 border border-slate-300 rounded-xl text-center" placeholder="1234">
+                            </div>
+                        </div>
+                        <button onclick="startTest()" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 rounded-xl mt-4 shadow-lg flex items-center justify-center transition hover:scale-105">
+                            Mulai Asesmen <i data-lucide="arrow-right" class="ml-2" width="20"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fixed bottom-4 text-slate-400 text-xs w-full text-center pointer-events-none">&copy; 2025 SMP Al-Multazam Counseling Dept.</div>
+    </div>
+
+    <!-- ================= VIEW 2: ASESMEN ================= -->
+    <div id="view-test" class="min-h-screen flex flex-col items-center justify-center p-4 hidden-view app-view bg-slate-50">
+        <div class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+            <div class="max-w-4xl mx-auto px-4 py-3">
+                <div class="flex justify-between text-sm text-slate-600 mb-2 items-center">
+                    <span class="font-bold text-teal-700 flex items-center"><i data-lucide="clipboard-list" width="18" class="mr-2"></i> <span id="test-section-title">Bagian 1: Kepribadian</span></span>
+                    <span id="test-progress-text" class="bg-slate-100 px-3 py-1 rounded-full text-xs font-bold text-slate-600">1 / 34</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden"><div id="test-progress-bar" class="bg-teal-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div></div>
+            </div>
+        </div>
+        <div class="w-full max-w-3xl mt-16 fade-in">
+            <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border-t-8 border-teal-600 relative overflow-hidden min-h-[400px] flex flex-col justify-center">
+                <div class="relative z-10 w-full">
+                    <h2 id="question-text" class="text-xl md:text-2xl font-medium text-slate-800 text-center mb-12 leading-snug font-serif">Loading...</h2>
+                    <div class="grid grid-cols-5 gap-2 md:gap-4">
+                        <button onclick="handleAnswer(1)" class="flex flex-col items-center justify-center p-2 rounded-2xl border-2 border-red-100 bg-red-50/50 hover:bg-red-500 hover:text-white text-red-600 transition h-24 md:h-32"><span class="text-2xl md:text-3xl font-bold">1</span><span class="text-[10px] md:text-xs font-bold uppercase mt-1 text-center">Sangat Tidak Sesuai</span></button>
+                        <button onclick="handleAnswer(2)" class="flex flex-col items-center justify-center p-2 rounded-2xl border-2 border-orange-100 bg-orange-50/50 hover:bg-orange-500 hover:text-white text-orange-600 transition h-24 md:h-32"><span class="text-2xl md:text-3xl font-bold">2</span><span class="text-[10px] md:text-xs font-bold uppercase mt-1 text-center">Tidak Sesuai</span></button>
+                        <button onclick="handleAnswer(3)" class="flex flex-col items-center justify-center p-2 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-slate-500 hover:text-white text-slate-600 transition h-24 md:h-32"><span class="text-2xl md:text-3xl font-bold">3</span><span class="text-[10px] md:text-xs font-bold uppercase mt-1 text-center">Ragu-ragu</span></button>
+                        <button onclick="handleAnswer(4)" class="flex flex-col items-center justify-center p-2 rounded-2xl border-2 border-lime-100 bg-lime-50/50 hover:bg-lime-500 hover:text-white text-lime-600 transition h-24 md:h-32"><span class="text-2xl md:text-3xl font-bold">4</span><span class="text-[10px] md:text-xs font-bold uppercase mt-1 text-center">Sesuai</span></button>
+                        <button onclick="handleAnswer(5)" class="flex flex-col items-center justify-center p-2 rounded-2xl border-2 border-teal-100 bg-teal-50/50 hover:bg-teal-600 hover:text-white text-teal-700 transition h-24 md:h-32"><span class="text-2xl md:text-3xl font-bold">5</span><span class="text-[10px] md:text-xs font-bold uppercase mt-1 text-center">Sangat Sesuai</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= VIEW 3: DASHBOARD ================= -->
+    <div id="view-dashboard" class="min-h-screen bg-slate-100 p-4 md:p-8 overflow-y-auto no-print hidden-view app-view fade-in">
+        <div class="max-w-5xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-sm p-6 mb-6 flex flex-col md:flex-row justify-between items-center border-l-4 border-teal-600 gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Hasil Asesmen Selesai</h1>
+                    <p class="text-slate-600">Siswa: <span id="dash-nama" class="font-bold text-teal-700"></span> | Kelas: <span id="dash-kelas" class="font-bold text-teal-700"></span></p>
+                    <p class="text-sm text-slate-500 mt-1" id="dash-tanggal"></p>
+                </div>
+                <button onclick="window.print()" class="bg-teal-600 text-white px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-teal-700 shadow-md font-bold">
+                    <i data-lucide="printer" width="18"></i> CETAK LAPORAN
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-blue-500 flex flex-col items-center text-center">
+                    <i data-lucide="brain" class="text-blue-500 mb-2" width="32" height="32"></i>
+                    <h3 class="text-lg font-bold text-slate-700 mb-1">Karakter Dominan</h3>
+                    <p id="dash-trait-title" class="text-lg font-bold text-blue-600"></p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-teal-500 flex flex-col items-center text-center">
+                    <i data-lucide="book-open" class="text-teal-500 mb-2" width="32" height="32"></i>
+                    <h3 class="text-lg font-bold text-slate-700 mb-1">Gaya Belajar</h3>
+                    <p id="dash-vak-title" class="text-lg font-bold text-teal-600"></p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-indigo-500 flex flex-col items-center text-center">
+                    <i data-lucide="users" class="text-indigo-500 mb-2" width="32" height="32"></i>
+                    <h3 class="text-lg font-bold text-slate-700 mb-1">Kemampuan Sosial</h3>
+                    <p id="dash-sosial-title" class="text-lg font-bold text-indigo-600"></p>
+                </div>
+            </div>
+
+            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-8 text-center">
+                 <div class="mx-auto bg-white p-4 rounded-full w-20 h-20 flex items-center justify-center mb-4 shadow-sm"><i data-lucide="check-circle" class="text-emerald-500" width="40" height="40"></i></div>
+                 <h2 class="text-2xl font-bold text-emerald-800 mb-2">Terima Kasih!</h2>
+                 <p class="text-emerald-700 max-w-lg mx-auto">Data Anda telah berhasil diproses. Silakan klik tombol "Cetak Laporan" di atas untuk mengunduh atau mencetak hasil analisis psikologi Anda dalam format resmi 1 halaman.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= VIEW 4: PRINT (LAPORAN 1 HALAMAN MODERN) ================= -->
+    <div id="view-print" class="hidden print-block bg-white text-black p-0 mx-auto print-container font-serif">
+        <!-- KOP -->
+        <div class="header-kop">
+            <img src="https://i.ibb.co.com/zTGpbttr/LOGO-SMP-ALTAZ-removebg-preview.png" alt="Logo SMP Al-Multazam" class="h-20 w-auto">
+            <div class="flex-1">
+                <h3 class="header-yayasan">Yayasan Pendidikan Islam Al-Multazam</h3>
+                <h1 class="sekolah-nama">SMP AL-MULTAZAM</h1>
+                <p class="header-info font-bold">STATUS TERAKREDITASI "B" NPSN: 69821181</p>
+                <p class="header-info">Jl. Pertanian No. 1 Sambiroto Sooko Mojokerto - www.smpalmultazam.sch.id</p>
+            </div>
+        </div>
+
+        <!-- JUDUL & DATA -->
+        <div class="doc-title-box">
+            <h2 class="doc-title">LAPORAN PENGEMBANGAN DIRI SISWA</h2>
+            <h3 class="doc-subtitle">TAHUN PELAJARAN 2025/2026</h3>
+        </div>
+        <div class="grid grid-cols-[auto_1fr_auto_1fr] gap-x-3 gap-y-1 student-data font-medium">
+            <span class="text-slate-600">Nama Sekolah</span> <span>: SMP AL-MULTAZAM</span>
+            <span class="text-slate-600 pl-4">Kelas</span> <span>: <span id="print-kelas"></span></span>
+            <span class="text-slate-600">Nama Lengkap</span> <span class="uppercase font-bold text-slate-900">: <span id="print-nama"></span></span>
+            <span class="text-slate-600 pl-4">Nomor Induk</span> <span>: <span id="print-nis"></span></span>
+            <span class="text-slate-600">Jenis Kelamin</span> <span>: <span id="print-gender"></span></span>
+            <span></span><span></span>
+        </div>
+
+        <!-- CONTENT GRID -->
+        <div class="print-grid">
+            <!-- A. KARAKTER -->
+            <div class="print-box">
+                <h4 class="section-title text-blue-800"><i data-lucide="brain" width="14" class="mr-1.5"></i> A. Profil Kepribadian (Big 5)</h4>
+                <div class="mb-3" id="chart-character">
+                    <!-- AVG Bars Injected Here -->
+                </div>
+                <div class="text-justify border-t border-slate-100 pt-2">
+                    <p class="font-bold text-slate-900 text-[9pt] mb-1">Dominan: <span id="print-trait-title" class="text-blue-700"></span></p>
+                    <p id="print-character-desc" class="text-slate-700 leading-snug"></p>
+                </div>
+            </div>
+
+            <!-- B. GAYA BELAJAR -->
+            <div class="print-box">
+                <h4 class="section-title text-teal-800"><i data-lucide="book-open" width="14" class="mr-1.5"></i> B. Pemetaan Gaya Belajar</h4>
+                <div class="mb-3" id="chart-vak">
+                    <!-- AVG Bars Injected Here -->
+                </div>
+                <div class="text-justify border-t border-slate-100 pt-2">
+                    <p class="font-bold text-slate-900 text-[9pt] mb-1">Tipe Dominan: <span id="print-vak-type" class="uppercase text-teal-700"></span></p>
+                    <p id="print-vak-desc" class="text-slate-700 leading-snug"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- C. STRATEGI BELAJAR (FULL WIDTH) -->
+        <div class="print-full strategy-box">
+            <h4 class="section-title !bg-transparent !p-0 !mb-1 text-blue-800 !border-none"><i data-lucide="target" width="14" class="mr-1.5"></i> C. Saran & Strategi Belajar Efektif</h4>
+            <div class="flex items-start gap-2 mt-1">
+                <i data-lucide="check-circle-2" class="text-blue-500 mt-0.5 shrink-0" width="16" height="16"></i>
+                <p id="print-study-tips" class="text-justify leading-relaxed m-0 text-slate-800"></p>
+            </div>
+        </div>
+
+        <!-- D. SARAN PENGEMBANGAN DIRI & SOSIAL (FULL WIDTH) -->
+        <div class="print-full suggestion-box">
+            <h4 class="section-title !bg-transparent !p-0 !mb-1 text-emerald-800 !border-none"><i data-lucide="lightbulb" width="14" class="mr-1.5"></i> D. Kemampuan Sosial & Saran Pengembangan Diri</h4>
+            <div class="mb-2 pb-2 border-b border-emerald-200">
+                <span class="font-bold text-emerald-900 text-[9pt]">Level Kemampuan Sosial Interpersonal: </span>
+                <span id="print-social-level" class="bg-emerald-600 text-white px-2 py-0.5 rounded text-[8.5pt] font-bold"></span>
+            </div>
+            <p id="print-suggestion" class="text-justify leading-relaxed"></p>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="flex justify-end footer-sig break-inside-avoid">
+            <div class="text-center min-w-[200px]">
+                <p style="margin-bottom: 2px;">Mojokerto, <span id="print-date"></span></p>
+                <p style="margin-bottom: 3.5rem;">Guru Bimbingan Konseling,</p>
+                <p id="print-guru-nama" class="font-bold underline underline-offset-2 text-[10pt]"></p>
+                <p class="text-[9pt]">NIP. -</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= LOGIC ================= -->
+    <script>
+        // Data Pertanyaan Khusus Jenjang SMP (Total 65 Soal untuk Validitas Tinggi)
+        const questions = [
+            // --- BAGIAN 1: BIG 5 PERSONALITY (30 Soal) ---
+            // Openness (Keterbukaan terhadap Pengalaman Baru)
+            { id: 1, text: "Saya suka mencoba hal-hal baru, seperti hobi atau ekstrakurikuler baru.", dimension: 'openness' },
+            { id: 2, text: "Saya memiliki imajinasi yang aktif dan suka berkhayal tentang masa depan.", dimension: 'openness' },
+            { id: 3, text: "Saya cepat bosan jika belajar dengan cara yang sama setiap hari.", dimension: 'openness' },
+            { id: 4, text: "Saya menikmati pelajaran seni, budaya, atau kegiatan musik di sekolah.", dimension: 'openness' },
+            { id: 5, text: "Saya tertarik mempelajari hal-hal unik atau misteri sains yang belum terpecahkan.", dimension: 'openness' },
+            { id: 6, text: "Saya sering memikirkan ide-ide atau solusi yang tidak terpikirkan oleh teman-teman lain.", dimension: 'openness' },
+            // Conscientiousness (Ketekunan & Disiplin)
+            { id: 7, text: "Saya selalu mengerjakan PR sekolah sebelum waktunya dikumpulkan.", dimension: 'conscientiousness' },
+            { id: 8, text: "Saya rajin merapikan kembali barang atau buku sekolah setelah selesai digunakan.", dimension: 'conscientiousness' },
+            { id: 9, text: "Saya punya target nilai yang jelas dan selalu bekerja keras untuk mencapainya.", dimension: 'conscientiousness' },
+            { id: 10, text: "Saya memastikan jadwal pelajaran dan perlengkapan sekolah sudah siap sejak malam hari.", dimension: 'conscientiousness' },
+            { id: 11, text: "Saya merasa tidak tenang jika ada tugas sekolah yang belum diselesaikan.", dimension: 'conscientiousness' },
+            { id: 12, text: "Saya sangat teliti saat mengerjakan soal ujian agar tidak ada yang terlewat.", dimension: 'conscientiousness' },
+            // Extraversion (Ekstraversi / Energi Sosial)
+            { id: 13, text: "Saya merasa lebih bersemangat setelah bermain atau ngobrol dengan banyak teman.", dimension: 'extraversion' },
+            { id: 14, text: "Saya berani dan tidak ragu untuk memulai percakapan dengan teman baru.", dimension: 'extraversion' },
+            { id: 15, text: "Saya merasa nyaman saat bercerita atau presentasi di depan kelas.", dimension: 'extraversion' },
+            { id: 16, text: "Di waktu luang, saya lebih suka berkumpul bersama teman daripada sendirian di kamar.", dimension: 'extraversion' },
+            { id: 17, text: "Saya sering menjadi orang yang pertama kali mengajak ngobrol di dalam sebuah kelompok.", dimension: 'extraversion' },
+            { id: 18, text: "Saya suka menjadi pusat perhatian saat sedang berkumpul dengan teman-teman.", dimension: 'extraversion' },
+            // Agreeableness (Keramahan & Empati)
+            { id: 19, text: "Saya merasa sedih dan kasihan jika melihat teman saya sedang kesusahan.", dimension: 'agreeableness' },
+            { id: 20, text: "Saya lebih suka mengalah daripada bertengkar panjang dengan teman.", dimension: 'agreeableness' },
+            { id: 21, text: "Saya merasa senang jika bisa membantu teman yang kesulitan memahami pelajaran.", dimension: 'agreeableness' },
+            { id: 22, text: "Saya percaya bahwa semua teman sekelas pada dasarnya memiliki sifat yang baik.", dimension: 'agreeableness' },
+            { id: 23, text: "Saya berusaha menjaga perasaan teman saat harus memberikan kritik atau saran.", dimension: 'agreeableness' },
+            { id: 24, text: "Saya mudah memaafkan kesalahan teman dan tidak suka menyimpan dendam.", dimension: 'agreeableness' },
+            // Neuroticism (Stabilitas Emosi vs Kecemasan)
+            { id: 25, text: "Saya sering merasa sangat gugup atau cemas saat akan menghadapi ujian sekolah.", dimension: 'neuroticism' },
+            { id: 26, text: "Suasana hati (mood) saya mudah berubah-ubah dengan cepat dalam satu hari.", dimension: 'neuroticism' },
+            { id: 27, text: "Saya mudah merasa tersinggung atau marah jika ada teman yang mengkritik saya.", dimension: 'neuroticism' },
+            { id: 28, text: "Terkadang saya merasa khawatir berlebihan terhadap hal-hal yang belum tentu terjadi.", dimension: 'neuroticism' },
+            { id: 29, text: "Saya merasa sangat sedih, panik, atau down jika mendapat nilai jelek.", dimension: 'neuroticism' },
+            { id: 30, text: "Saya butuh waktu lama untuk menenangkan diri setelah bertengkar dengan teman atau orang tua.", dimension: 'neuroticism' },
+
+            // --- BAGIAN 2: KETERAMPILAN SOSIAL (10 Soal) ---
+            { id: 31, text: "Saya bisa membagi tugas dan bekerja sama dengan baik saat ada kerja kelompok.", dimension: 'social_skill' },
+            { id: 32, text: "Saya mau mendengarkan pendapat teman, meskipun pendapatnya berbeda dengan saya.", dimension: 'social_skill' },
+            { id: 33, text: "Saya tahu cara menenangkan teman atau sahabat yang sedang marah atau sedih.", dimension: 'social_skill' },
+            { id: 34, text: "Saya berani meminta maaf jika saya menyadari telah melakukan kesalahan kepada teman/guru.", dimension: 'social_skill' },
+            { id: 35, text: "Saya berusaha menghindari kebiasaan membicarakan kejelekan teman (gosip) di belakangnya.", dimension: 'social_skill' },
+            { id: 36, text: "Jika ada dua teman yang bertengkar, saya berusaha menengahi secara adil.", dimension: 'social_skill' },
+            { id: 37, text: "Saya tahu kapan waktu yang tepat untuk bercanda dan kapan harus serius di kelas.", dimension: 'social_skill' },
+            { id: 38, text: "Saya bisa menolak ajakan teman untuk melakukan hal negatif dengan cara yang tegas tapi sopan.", dimension: 'social_skill' },
+            { id: 39, text: "Saya mudah beradaptasi saat dipindahkan ke tempat duduk atau kelompok yang baru.", dimension: 'social_skill' },
+            { id: 40, text: "Saya terbiasa mengucapkan terima kasih jika dibantu dan meminta tolong dengan bahasa yang baik.", dimension: 'social_skill' },
+
+            // --- BAGIAN 3: GAYA BELAJAR (21 Soal) ---
+            // Gaya Belajar - Visual
+            { id: 41, text: "Saya lebih mudah ingat pelajaran jika guru menggunakan gambar, video, atau slide presentasi.", dimension: 'visual' },
+            { id: 42, text: "Saya suka mencatat dengan rapi dan menggunakan pulpen warna-warni atau stabilo.", dimension: 'visual' },
+            { id: 43, text: "Saat membaca buku cerita, saya suka membayangkan adegannya di kepala seperti menonton film.", dimension: 'visual' },
+            { id: 44, text: "Saya lebih suka membaca teks sendiri di buku daripada mendengarkan teman membacakannya.", dimension: 'visual' },
+            { id: 45, text: "Jika tersesat atau mencari ruangan, saya lebih suka melihat peta/denah daripada bertanya kepada orang.", dimension: 'visual' },
+            { id: 46, text: "Saya lebih mudah memahami materi jika disajikan dalam bentuk grafik, tabel, atau mind-mapping.", dimension: 'visual' },
+            { id: 47, text: "Saya cukup memperhatikan kerapian pakaian, ruang kelas, dan tampilan lingkungan sekitar saya.", dimension: 'visual' },
+            // Gaya Belajar - Auditory
+            { id: 48, text: "Saya lebih cepat paham jika mendengarkan guru menjelaskan materi secara langsung (ceramah).", dimension: 'auditory' },
+            { id: 49, text: "Saya suka menghafal pelajaran dengan cara membacanya menggunakan suara keras atau bergumam.", dimension: 'auditory' },
+            { id: 50, text: "Konsentrasi belajar saya mudah buyar jika ada suara berisik atau obrolan di sekitar saya.", dimension: 'auditory' },
+            { id: 51, text: "Saya sangat menikmati diskusi kelompok, debat kelas, atau tanya jawab lisan dengan guru.", dimension: 'auditory' },
+            { id: 52, text: "Saya mudah mengingat penjelasan guru dari intonasi suara, atau mengingat nada lagu yang baru saya dengar.", dimension: 'auditory' },
+            { id: 53, text: "Saya lebih suka dijelaskan aturan sebuah permainan secara lisan daripada disuruh membaca aturannya.", dimension: 'auditory' },
+            { id: 54, text: "Saat belajar, kadang saya suka berdialog dengan diri sendiri atau merekam suara lalu mendengarkannya ulang.", dimension: 'auditory' },
+            // Gaya Belajar - Kinestetik
+            { id: 55, text: "Saya jauh lebih paham jika langsung mencoba (praktik/eksperimen) daripada sekadar membaca teori.", dimension: 'kinesthetic' },
+            { id: 56, text: "Saat belajar atau berpikir keras, saya sering tanpa sadar mengetuk pena atau menggoyangkan kaki.", dimension: 'kinesthetic' },
+            { id: 57, text: "Saya merasa cepat bosan dan tidak betah jika disuruh duduk diam mendengarkan di kelas terlalu lama.", dimension: 'kinesthetic' },
+            { id: 58, text: "Saya lebih menyukai pelajaran yang banyak aktivitas fisiknya, seperti olahraga atau prakarya kesenian.", dimension: 'kinesthetic' },
+            { id: 59, text: "Saya suka belajar sambil berjalan mondar-mandir atau sambil memegang suatu benda (seperti bola kecil).", dimension: 'kinesthetic' },
+            { id: 60, text: "Saya lebih suka kegiatan merakit sesuatu, membuat kerajinan tangan, atau membongkar-pasang barang.", dimension: 'kinesthetic' },
+            { id: 61, text: "Saya sering menggunakan gerakan tangan atau gestur tubuh saat bercerita kepada teman.", dimension: 'kinesthetic' },
+
+            // --- BAGIAN 4: VALIDITAS / LIE SCALE (4 Soal) ---
+            { id: 62, text: "Saya tidak pernah sekalipun terlambat atau melakukan satu kesalahan pun di sekolah.", dimension: 'lie' },
+            { id: 63, text: "Saya selalu menyukai dan bersikap ramah kepada semua orang yang saya kenal tanpa terkecuali.", dimension: 'lie' },
+            { id: 64, text: "Saya tidak pernah merasa malas atau enggan belajar seumur hidup saya.", dimension: 'lie' },
+            { id: 65, text: "Saya selalu menuruti nasihat orang tua dan guru setiap saat tanpa pernah membantah sedikit pun.", dimension: 'lie' }
+        ];
+
+        let studentData = { nama: '', kelas: '', nis: '', gender: '' };
+        let answers = {};
+        let currentQuestionIndex = 0;
+        let finalResults = null;
+
+        // UI Helpers
+        function switchView(viewId) {
+            document.querySelectorAll('.app-view').forEach(el => { el.classList.add('hidden-view'); el.classList.remove('fade-in'); });
+            const target = document.getElementById(viewId);
+            if (target) { target.classList.remove('hidden-view'); void target.offsetWidth; target.classList.add('fade-in'); }
+            lucide.createIcons();
+            window.scrollTo(0,0);
+        }
+
+        // Chart Builder
+        function createBar(label, percent, colorClass, icon) {
+            return `
+            <div class="chart-row">
+                <div class="chart-label flex items-center">
+                    ${icon ? `<span class="chart-icon">${icon}</span>` : ''}
+                    <span class="truncate">${label}</span>
+                </div>
+                <div class="chart-track">
+                    <div class="chart-fill ${colorClass}" style="width: ${percent}%"></div>
+                </div>
+                <div class="chart-value">${percent}%</div>
+            </div>`;
+        }
+
+        // Logic
+        function startTest() {
+            const nama = document.getElementById('input-nama').value;
+            const gender = document.getElementById('input-gender').value;
+            const kelas = document.getElementById('input-kelas').value;
+            const nis = document.getElementById('input-nis').value;
+            if (!nama || !kelas || !gender) { alert("Mohon lengkapi Data Diri secara lengkap."); return; }
+            studentData = { nama, gender, kelas, nis };
+            switchView('view-test');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            const progress = Math.round(((currentQuestionIndex + 1) / questions.length) * 100);
+            
+            if(document.getElementById('test-progress-text')) document.getElementById('test-progress-text').innerText = `${currentQuestionIndex + 1} / ${questions.length}`;
+            if(document.getElementById('test-progress-bar')) document.getElementById('test-progress-bar').style.width = `${progress}%`;
+            if(document.getElementById('question-text')) document.getElementById('question-text').innerText = `"${q.text}"`;
+            
+            let sec = "Bagian 1: Kepribadian";
+            if(q.id > 30 && q.id <= 40) sec = "Bagian 2: Keterampilan Sosial";
+            if(q.id > 40 && q.id <= 61) sec = "Bagian 3: Gaya Belajar";
+            if(q.id > 61) sec = "Bagian 4: Validasi";
+            if(document.getElementById('test-section-title')) document.getElementById('test-section-title').innerHTML = sec;
+        }
+
+        function handleAnswer(score) {
+            answers[questions[currentQuestionIndex].id] = score;
+            if (currentQuestionIndex < questions.length - 1) { currentQuestionIndex++; renderQuestion(); }
+            else { finishTest(); }
+        }
+
+        function finishTest() {
+            calculateResults();
+            renderDashboard();
+            renderPrintReport();
+            switchView('view-dashboard');
+        }
+
+        function calculateResults() {
+            const scores = { openness: 0, conscientiousness: 0, extraversion: 0, agreeableness: 0, neuroticism: 0, social_skill: 0, visual: 0, auditory: 0, kinesthetic: 0, lie: 0 };
+            
+            questions.forEach(q => {
+                let s = answers[q.id] || 3;
+                if (q.reverse) s = 6 - s;
+                scores[q.dimension] += s;
+            });
+
+            // Normalisasi Score berdasarkan jumlah soal tiap dimensi * nilai max (5)
+            // Big 5: 6 soal * 5 = 30 max
+            const normBig5 = (val) => Math.min(100, Math.round((val / 30) * 100));
+            // Social: 10 soal * 5 = 50 max
+            const normSocial = (val) => Math.min(100, Math.round((val / 50) * 100));
+            // VAK: 7 soal * 5 = 35 max
+            const normVak = (val) => Math.min(100, Math.round((val / 35) * 100));
+            
+            const stats = {
+                char: [
+                    { l: 'Keterbukaan', v: normBig5(scores.openness), i: '🎨' },
+                    { l: 'Kedisiplinan', v: normBig5(scores.conscientiousness), i: '📋' },
+                    { l: 'Ekstraversi', v: normBig5(scores.extraversion), i: '🗣️' },
+                    { l: 'Empati/Ramah', v: normBig5(scores.agreeableness), i: '🤝' },
+                    { l: 'Sensitivitas', v: normBig5(scores.neuroticism), i: '🌪️' } 
+                ],
+                vak: [
+                    { l: 'Visual', v: normVak(scores.visual), i: '👁️' },
+                    { l: 'Auditori', v: normVak(scores.auditory), i: '👂' },
+                    { l: 'Kinestetik', v: normVak(scores.kinesthetic), i: '🏃' }
+                ],
+                sosialScore: normSocial(scores.social_skill)
+            };
+
+            // Logic Karakter Dominan
+            let highTraits = stats.char.filter(t => t.v >= 70).map(t => t.l);
+            if(highTraits.length === 0) {
+                // Ambil yang paling tinggi jika tidak ada yang >= 70
+                let maxTrait = stats.char.reduce((prev, current) => (prev.v > current.v) ? prev : current);
+                highTraits = [maxTrait.l];
+            }
+            
+            // Sort VAK
+            stats.vak.sort((a,b) => b.v - a.v);
+            const domVak = stats.vak[0].l; 
+
+            // Deskripsi Kepribadian SMP
+            let charDesc = `Ananda memiliki kecenderungan profil kepribadian yang menonjol pada aspek ${highTraits.join(" dan ")}. `;
+            if(scores.openness > 20) charDesc += "Ananda adalah siswa yang kreatif, memiliki imajinasi luas, dan sangat terbuka terhadap pelajaran atau hobi baru. ";
+            if(scores.conscientiousness > 20) charDesc += "Tingkat kedisiplinan Ananda cukup tinggi; cenderung rajin mengerjakan tugas tepat waktu dan suka keteraturan. ";
+            if(scores.extraversion > 20) charDesc += "Ananda memiliki energi sosial yang besar, berani tampil, dan senang menjalin pertemanan di sekolah. ";
+            if(scores.agreeableness > 20) charDesc += "Sifat empati Ananda sangat baik; Ananda mudah peduli, ramah, dan dapat bekerja sama dengan teman-teman. ";
+            if(scores.neuroticism > 20) charDesc += "Terkadang Ananda masih mudah merasa cemas saat menghadapi ujian atau bereaksi sensitif terhadap kritik, sehingga perlu belajar rileks. ";
+            else charDesc += "Kestabilan emosi Ananda cukup baik, mampu tetap tenang menghadapi dinamika tugas sekolah yang padat. ";
+
+            // Deskripsi Gaya Belajar & Strategi (VAK)
+            let learnDesc = "";
+            let studyTips = "";
+            if (domVak === 'Visual') {
+                learnDesc = "Gaya belajar utama Ananda adalah Visual. Artinya, otak memproses informasi paling baik melalui indra penglihatan. Ananda lebih mudah memahami materi jika melihat bentuk fisik, gambar, atau membaca teks secara mandiri.";
+                studyTips = "💡 SARAN BELAJAR VISUAL: Saat belajar mandiri di rumah atau di kelas, cobalah menggunakan stabilo warna-warni untuk menandai kalimat penting di buku. Buatlah catatan dengan rapi dan gunakan Peta Konsep (Mind Mapping). Jika ada materi yang sulit dipahami lewat lisan, carilah video pembelajaran edukatif di internet atau pelajari diagram/gambarnya di buku cetak.";
+            } else if (domVak === 'Auditori') {
+                learnDesc = "Gaya belajar utama Ananda adalah Auditori. Ananda sangat peka terhadap suara dan paling mudah menangkap informasi melalui penjelasan lisan guru, diskusi kelas, atau mendengarkan cerita.";
+                studyTips = "💡 SARAN BELAJAR AUDITORI: Saat menghafal materi, cobalah membacanya dengan suara agak keras agar telinga ikut mendengar. Mengajak teman untuk diskusi kelompok atau saling melempar pertanyaan lisan sangat efektif bagi Ananda. Hindari tempat belajar yang terlalu bising, karena konsentrasi Ananda mudah terganggu oleh suara-suara di sekitar.";
+            } else {
+                learnDesc = "Gaya belajar utama Ananda adalah Kinestetik. Ananda belajar paling baik dengan melibatkan pengalaman langsung, gerakan fisik, atau praktik. Duduk diam terlalu lama di kelas mungkin sering membuat bosan.";
+                studyTips = "💡 SARAN BELAJAR KINESTETIK: Gunakan gerakan saat menghafal (misalnya sambil berjalan mondar-mandir). Jangan paksakan belajar terus-menerus; lakukan jeda istirahat singkat setiap 30 menit untuk meregangkan otot. Saat belajar teori, cobalah mencari contoh penerapannya dalam kehidupan nyata atau lakukan eksperimen praktik secara mandiri.";
+            }
+
+            // Kemampuan Sosial & Pengembangan Diri
+            let socialLevel = "";
+            if(scores.social_skill >= 40) socialLevel = "SANGAT BAIK";
+            else if(scores.social_skill >= 30) socialLevel = "BAIK";
+            else socialLevel = "PERLU DITINGKATKAN";
+
+            let suggest = "";
+            if (scores.lie > 14) { // Cek kebohongan (Max 20, jika menjawab Sesuai/Sangat Sesuai di semua lie test)
+                suggest = "Catatan: Siswa terlihat berusaha memberikan jawaban 'sempurna' dan terlalu ideal. Saran pertama untuk pengembangan diri adalah pentingnya bersikap jujur pada diri sendiri dan menerima kekurangan sebagai ruang untuk berkembang. \n\n";
+            }
+            
+            suggest += `Melihat tingkat keterampilan sosial yang berada pada level ${socialLevel}, Ananda disarankan untuk `;
+            if(scores.social_skill < 30) {
+                suggest += "mulai lebih aktif membuka diri dalam pergaulan di sekolah. Cobalah ikut dalam kegiatan ekstrakurikuler yang melibatkan kerja tim. Jangan ragu untuk berlatih komunikasi dan menyapa teman lebih dulu. ";
+            } else {
+                suggest += "terus mempertahankan sikap baik dan empati Ananda. Jadilah teladan yang positif di antara teman sebaya dan ambil peran kepemimpinan seperti menjadi pengurus kelas atau kelompok. ";
+            }
+            
+            if(scores.conscientiousness < 18) {
+                suggest += "Hal penting yang perlu ditingkatkan saat ini adalah KEDISIPLINAN. Mulailah membiasakan diri membuat jadwal harian yang teratur antara waktu belajar, bermain, dan istirahat agar tidak menunda PR.";
+            } else if (scores.neuroticism > 21) {
+                suggest += "Karena Ananda cenderung mudah cemas, sangat disarankan untuk melatih manajemen stres. Jangan terlalu takut salah; kegagalan adalah bagian dari proses belajar di jenjang SMP ini.";
+            } else {
+                suggest += "Fokuslah pada kekuatan utama Ananda, seimbangkan antara pencapaian akademis dan pengembangan karakter yang baik.";
+            }
+
+            const interpretation = {
+                characterDesc: charDesc,
+                strengths: highTraits.slice(0,2),
+                learningDesc: learnDesc,
+                studyTips: studyTips,
+                socialLevel: socialLevel,
+                selfDevSuggestion: suggest
+            };
+
+            finalResults = { scores, stats, interpretation, domVak };
+        }
+
+        function renderDashboard() {
+            const res = finalResults;
+            const today = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            if(document.getElementById('dash-nama')) document.getElementById('dash-nama').innerText = studentData.nama;
+            if(document.getElementById('dash-kelas')) document.getElementById('dash-kelas').innerText = studentData.kelas;
+            if(document.getElementById('dash-tanggal')) document.getElementById('dash-tanggal').innerText = `Tanggal Tes: ${today}`;
+            
+            if(document.getElementById('dash-trait-title')) document.getElementById('dash-trait-title').innerText = res.interpretation.strengths.join(", ");
+            if(document.getElementById('dash-vak-title')) document.getElementById('dash-vak-title').innerText = res.domVak;
+            if(document.getElementById('dash-sosial-title')) document.getElementById('dash-sosial-title').innerText = res.interpretation.socialLevel;
+        }
+
+        function renderPrintReport() {
+            const res = finalResults;
+            const today = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Data Siswa
+            if(document.getElementById('print-nama')) document.getElementById('print-nama').innerText = studentData.nama;
+            if(document.getElementById('print-kelas')) document.getElementById('print-kelas').innerText = studentData.kelas;
+            if(document.getElementById('print-nis')) document.getElementById('print-nis').innerText = studentData.nis;
+            if(document.getElementById('print-gender')) document.getElementById('print-gender').innerText = studentData.gender;
+            
+            // Render Charts (With Colors & Icons)
+            const renderCharts = (data, id, colorClass) => {
+                const el = document.getElementById(id);
+                if(el) el.innerHTML = data.map(d => createBar(d.l, d.v, colorClass, d.i)).join('');
+            };
+            
+            // 1. Karakter (Blue Gradient)
+            renderCharts(res.stats.char, 'chart-character', 'fill-blue');
+            
+            // 2. VAK (Teal Gradient)
+            renderCharts(res.stats.vak, 'chart-vak', 'fill-teal');
+
+            // Teks Interpretasi
+            if(document.getElementById('print-trait-title')) document.getElementById('print-trait-title').innerText = res.interpretation.strengths.join(", ");
+            if(document.getElementById('print-character-desc')) document.getElementById('print-character-desc').innerText = res.interpretation.characterDesc;
+            
+            if(document.getElementById('print-vak-type')) document.getElementById('print-vak-type').innerText = res.domVak;
+            if(document.getElementById('print-vak-desc')) document.getElementById('print-vak-desc').innerText = res.interpretation.learningDesc;
+            
+            if(document.getElementById('print-study-tips')) document.getElementById('print-study-tips').innerText = res.interpretation.studyTips;
+
+            if(document.getElementById('print-social-level')) document.getElementById('print-social-level').innerText = res.interpretation.socialLevel;
+            if(document.getElementById('print-suggestion')) document.getElementById('print-suggestion').innerText = res.interpretation.selfDevSuggestion;
+            
+            if(document.getElementById('print-date')) document.getElementById('print-date').innerText = today;
+            if(document.getElementById('print-guru-nama')) document.getElementById('print-guru-nama').innerText = studentData.gender === "Putra" ? "( Ramdlani In'am Arzaqi, S.Pd. )" : "( Ela Yuni Istikhomah, S.Psi. )";
+            
+            lucide.createIcons();
+        }
+
+        window.onload = function() { lucide.createIcons(); };
+    </script>
+</body>
+</html>
